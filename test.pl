@@ -25,12 +25,12 @@ my $iTest = 2;
 
 my $sEngine = 'Nomade';
 my $oSearch = new WWW::Search($sEngine);
-#$oSearch->http_proxy("http://195.154.155.254:3128");
 print ref($oSearch) ? '' : 'not ';
-print "ok $iTest\n";
+print "ok $iTest wait 10 s\n";
+sleep(10);
 
 use WWW::Search::Test;
-$oSearch->{_debug} = 0;
+$oSearch->{_debug}=2;
 
 # This test returns no results (but we should not get an HTTP error):
 $iTest++;
@@ -38,7 +38,8 @@ $oSearch->native_query($WWW::Search::Test::bogus_query);
 @aoResults = $oSearch->results();
 $iResults = scalar(@aoResults);
 print STDOUT (0 < $iResults) ? 'not ' : '';
-print "ok $iTest\n";
+print "ok $iTest wait 10 s\n";
+sleep(10);
 
 # goto MULTI_RESULT;
 
@@ -55,11 +56,12 @@ if (($iResults < 2) || (49 < $iResults))
   print STDERR " --- got $iResults results for $sQuery, but expected 2..49\n";
   print STDOUT 'not ';
   }
-print "ok $iTest\n";
+print "ok $iTest wait 10 s\n";
+sleep(10);
 
 goto MULTI_RESULT;
 
-# This query returns 10 pages of results:
+# This query returns 2 pages of results:
 $iTest++;
 $sQuery = 'simpson';
 $oSearch->native_query(WWW::Search::escape_query($sQuery),
@@ -72,14 +74,15 @@ if (($iResults < 51) || (99 < $iResults))
   print STDERR " --- got $iResults results for $sQuery, but expected 51..99\n";
   print STDOUT 'not ';
   }
-print "ok $iTest\n";
+print "ok $iTest wait 10 s\n";
+sleep(10);
 
 MULTI_RESULT:
 # $debug = 1;
 
 # This query returns 3 pages of results:
 $iTest++;
-$sQuery = 'internet';
+$sQuery = 'cgi';
 $oSearch->native_query($sQuery,
                          { 'search_debug' => $debug, },
                       );
